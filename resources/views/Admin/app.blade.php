@@ -18,7 +18,6 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* BANNER CLEANER ANTI-GOOGLE */
         .goog-te-banner-frame.skiptranslate,
         .goog-te-banner-frame {
             display: none !important;
@@ -39,14 +38,9 @@
 </head>
 
 <body class="bg-[#fafafa] text-[#0f2440] antialiased overflow-x-hidden">
-
     <main>
         @yield('content')
     </main>
-
-    {{-- =====================================================================
-         ENGINE AUTO-TRANSLATE GHAIB (BACKGROUND SYNC LISTENER)
-         ===================================================================== --}}
     <div id="google_translate_element" style="display: none !important;"></div>
 
     <script type="text/javascript">
@@ -60,7 +54,6 @@
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
     </script>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             let savedLang = localStorage.getItem('goog_lang') || 'id';

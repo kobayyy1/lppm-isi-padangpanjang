@@ -6,27 +6,28 @@
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
             <div class="flex flex-col items-start gap-1">
                 <div class="flex items-center gap-3 mb-1 select-none">
-                    <img src="{{ asset('images/icon-notice.png') }}" alt="Notice" class="h-6 object-contain">
+                    <img src="{{ asset('images/icon-notice.png') }}" alt="Notice" class="h-8 object-contain">
                     <div class="inline-flex items-center gap-1">
                         @for ($i = 0; $i < 3; $i++)
                             <div class="grid grid-cols-2 gap-0.5">
-                                <span class="w-1.5 h-1.5 bg-[#ff9f1c] rounded-[1px]"></span>
-                                <span class="w-1.5 h-1.5 bg-transparent"></span>
-                                <span class="w-1.5 h-1.5 bg-transparent"></span>
-                                <span class="w-1.5 h-1.5 bg-[#ff9f1c] rounded-[1px]"></span>
+                                <span class="w-2.5 h-2.5 bg-[#ff9f1c] rounded-[1px]"></span>
+                                <span class="w-2.5 h-2.5 bg-transparent"></span>
+                                <span class="w-2.5 h-2.5 bg-transparent"></span>
+                                <span class="w-2.5 h-2.5 bg-[#ff9f1c] rounded-[1px]"></span>
                             </div>
                         @endfor
                     </div>
                 </div>
                 <div class="relative inline-block">
-                    <h1 class="text-5xl md:text-6xl font-black text-[#0f2440] tracking-tight uppercase">
-                        About
-                    </h1>
-                    <div class="absolute -bottom-2 left-0 w-full h-1 border-b-2 border-dashed border-[#0f2440] opacity-30">
+                    <h1 class="text-6xl font-black text-[#0f2440] tracking-tight  leading-none mt-1">About</h1>
+                    <div class="flex items-center mt-2" style="gap:4px;">
+                        <div class="bg-[#0f2440] rounded-full" style="width:120px;height:3px;"></div>
+                        <div class="bg-[#0f2440] rounded-full" style="width:30px;height:3px;"></div>
+                        <div class="bg-[#0f2440] rounded-full" style="width:6px;height:3px;"></div>
+                        <div class="bg-[#0f2440] rounded-full" style="width:6px;height:3px;"></div>
+                        <div class="bg-[#0f2440] rounded-full" style="width:6px;height:3px;"></div>
                     </div>
-                    <div class="absolute -bottom-2 left-0 w-16 h-1 border-b-2 border-[#ff9f1c]"></div>
                 </div>
-            </div>
         </section>
 
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">

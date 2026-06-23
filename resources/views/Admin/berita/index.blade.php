@@ -1,8 +1,54 @@
 @extends('admin.app')
 
 @section('content')
-    <div class="flex min-h-screen bg-gray-100 font-['Roboto']" style="font-family: 'Roboto', sans-serif;">
+    <div x-data="{ sidebarOpen: false }" class="flex min-h-screen bg-gray-100 font-['Roboto']"
+        style="font-family: 'Roboto', sans-serif;">
 
+        <!-- SIDEBAR MOBILE (DRAWER) -->
+        <div x-show="sidebarOpen" class="fixed inset-0 z-50 flex md:hidden" style="display: none;">
+            <div x-show="sidebarOpen" x-transition:opacity class="fixed inset-0 bg-black/50 backdrop-blur-sm"
+                @click="sidebarOpen = false"></div>
+
+            <div x-show="sidebarOpen" x-transition:enter="transition ease-in-out duration-300 transform"
+                x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
+                x-transition:leave="transition ease-in-out duration-300 transform" x-transition:leave-start="translate-x-0"
+                x-transition:leave-end="-translate-x-full"
+                class="relative w-64 bg-[#0f2440] text-white flex flex-col shadow-xl z-10">
+                <div class="p-5 border-b border-slate-700/50 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-[#ff9f1c] p-2 rounded-lg">
+                            <img src="{{ asset('images/icon/globe.png') }}" alt="Logo"
+                                class="w-4 h-4 object-contain invert">
+                        </div>
+                        <div>
+                            <h1 class="font-black text-sm tracking-tight text-white uppercase">Admin Panel</h1>
+                            <p class="text-[8px] text-[#ff9f1c] font-bold tracking-wider uppercase">LPPM ISI</p>
+                        </div>
+                    </div>
+                    <button @click="sidebarOpen = false" class="text-white hover:text-[#ff9f1c] focus:outline-none">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex-1 overflow-y-auto">
+                    @include('Admin.sidebar')
+                </div>
+                <div class="p-4 border-t border-slate-700/50">
+                    <a href="{{ route('home') }}" target="_blank"
+                        class="flex items-center justify-between px-3 py-2 text-xs text-slate-400 hover:text-[#ff9f1c] transition-all">
+                        <span>Lihat Website Front-end</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR DESKTOP -->
         <div class="w-64 bg-[#0f2440] text-white flex-shrink-0 hidden md:flex flex-col shadow-xl">
             <div class="p-6 border-b border-slate-700/50 flex items-center gap-3">
                 <div class="bg-[#ff9f1c] p-2 rounded-lg select-none">
@@ -13,9 +59,9 @@
                     <p class="text-[9px] text-[#ff9f1c] font-bold tracking-wider uppercase">LPPM ISI Padangpanjang</p>
                 </div>
             </div>
-
-            @include('Admin.sidebar')
-
+            <div class="flex-1 overflow-y-auto">
+                @include('Admin.sidebar')
+            </div>
             <div class="p-4 border-t border-slate-700/50 space-y-1">
                 <a href="{{ route('home') }}" target="_blank"
                     class="flex items-center gap-3 px-4 py-2.5 text-xs text-slate-400 hover:text-[#ff9f1c] transition-all">
@@ -28,8 +74,25 @@
             </div>
         </div>
 
+        <!-- MAIN CONTENT AREA -->
         <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
-            <main class="flex-1 p-6 md:p-8 space-y-6 overflow-y-auto">
+
+            <!-- Top Bar Mobile -->
+            <div
+                class="h-14 bg-white border-b border-gray-200 flex items-center px-4 md:hidden flex-shrink-0 shadow-sm justify-between">
+                <button @click="sidebarOpen = !sidebarOpen"
+                    class="text-[#0f2440] p-1.5 rounded-lg hover:bg-gray-50 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <div
+                    class="w-8 h-9 bg-[#0f2440] text-[#ff9f1c] font-black rounded-full flex items-center justify-center border border-[#ff9f1c] text-xs">
+                    A</div>
+            </div>
+
+            <main class="flex-1 p-4 sm:p-6 md:p-8 space-y-6 overflow-y-auto">
 
                 @if (session('status'))
                     <div
@@ -42,13 +105,15 @@
                     </div>
                 @endif
 
-                <div class="flex items-center justify-between border-b border-gray-200 pb-4">
-                    <div>
-                        <h2 class="text-2xl font-black text-[#0f2440] uppercase tracking-tight">Kelola Berita</h2>
+                <!-- Header Title & Action Block -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-4">
+                    <div class="text-left">
+                        <h2 class="text-xl sm:text-2xl font-black text-[#0f2440] uppercase tracking-tight">Kelola Berita
+                        </h2>
                         <p class="text-xs text-gray-400">Daftar seluruh berita, artikel, dan pengumuman aktif tim LPPM.</p>
                     </div>
                     <a href="{{ route('admin.berita.create') }}"
-                        class="bg-[#0f2440] text-white hover:bg-slate-800 font-bold text-xs px-5 py-3 rounded-xl uppercase tracking-wider transition-all shadow-md flex items-center gap-2 select-none">
+                        class="bg-[#0f2440] text-white hover:bg-slate-800 font-bold text-xs px-5 py-3 rounded-xl uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 select-none w-full sm:w-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                         </svg>
@@ -56,25 +121,26 @@
                     </a>
                 </div>
 
-                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                <!-- Table Container Wrapper -->
+                <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                     <div class="w-full overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
+                        <table class="w-full text-left border-collapse min-w-[750px]">
                             <thead>
                                 <tr
-                                    class="bg-gray-50 text-[11px] font-bold uppercase tracking-wider text-gray-400 border-b border-gray-100">
-                                    <th class="py-4 px-6 w-24">Cover</th>
-                                    <th class="py-4 px-6">Informasi Berita</th>
-                                    <th class="py-4 px-6">Masa Aktif</th>
-                                    <th class="py-4 px-6">Status</th>
-                                    <th class="py-4 px-6 text-center w-40">Aksi</th>
+                                    class="bg-gray-50 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-gray-400 border-b border-gray-100">
+                                    <th class="py-4 px-4 sm:px-6 w-24">Cover</th>
+                                    <th class="py-4 px-4 sm:px-6">Informasi Berita</th>
+                                    <th class="py-4 px-4 sm:px-6 w-44">Masa Aktif</th>
+                                    <th class="py-4 px-4 sm:px-6 w-32">Status</th>
+                                    <th class="py-4 px-4 sm:px-6 text-center w-36">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100 text-sm font-normal text-gray-600">
+                            <tbody class="divide-y divide-gray-100 text-xs sm:text-sm font-normal text-gray-600">
                                 @forelse ($beritas as $berita)
                                     <tr class="hover:bg-gray-50/80 transition-colors">
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-4 sm:px-6">
                                             <div
-                                                class="w-16 h-12 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shadow-sm flex items-center justify-center">
+                                                class="w-16 h-12 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shadow-sm flex items-center justify-center flex-shrink-0">
                                                 @if ($berita->image)
                                                     <img src="{{ asset('storage/' . $berita->image) }}" alt="Cover"
                                                         class="w-full h-full object-cover">
@@ -85,19 +151,19 @@
                                             </div>
                                         </td>
 
-                                        <td class="py-4 px-6 font-medium text-gray-800 max-w-xs md:max-w-sm">
-                                            <div class="truncate text-base font-bold text-[#0f2440] mb-0.5">
+                                        <td class="py-4 px-4 sm:px-6 text-left max-w-xs md:max-w-sm">
+                                            <div class="truncate text-sm sm:text-base font-bold text-[#0f2440] mb-0.5">
                                                 {{ $berita->title }}</div>
-                                            <span class="text-xs text-gray-400 font-mono select-all">slug:
+                                            <span class="text-[10px] sm:text-xs text-gray-400 font-mono select-all">slug:
                                                 {{ $berita->slug }}</span>
                                         </td>
 
-                                        <td class="py-4 px-6 text-xs text-gray-500 font-medium">
+                                        <td class="py-4 px-4 sm:px-6 text-xs text-gray-500 font-medium whitespace-nowrap">
                                             @if ($berita->start_date || $berita->end_date)
                                                 <div class="flex flex-col gap-0.5">
                                                     <span>📅
                                                         {{ $berita->start_date ? \Carbon\Carbon::parse($berita->start_date)->format('d M Y') : 'Mulai Sekarang' }}</span>
-                                                    <span class="text-gray-300 font-light">s/d</span>
+                                                    <span class="text-gray-300 font-light pl-4">s/d</span>
                                                     <span>🏁
                                                         {{ $berita->end_date ? \Carbon\Carbon::parse($berita->end_date)->format('d M Y') : 'Selamanya' }}</span>
                                                 </div>
@@ -106,7 +172,7 @@
                                             @endif
                                         </td>
 
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-4 sm:px-6 whitespace-nowrap">
                                             @php
                                                 $now = \Carbon\Carbon::now()->startOfDay();
                                                 $start = $berita->start_date
@@ -127,19 +193,19 @@
 
                                             @if ($active)
                                                 <span
-                                                    class="inline-flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-emerald-100">
-                                                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                                    Active
+                                                    class="inline-flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider border border border-emerald-100">
+                                                    <span
+                                                        class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Active
                                                 </span>
                                             @else
                                                 <span
-                                                    class="inline-flex items-center gap-1.5 text-red-600 bg-red-50 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-red-100">
-                                                    <span class="w-2 h-2 rounded-full bg-red-400"></span> Non-Active
+                                                    class="inline-flex items-center gap-1.5 text-red-600 bg-red-50 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider border border border-red-100">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>Non-Active
                                                 </span>
                                             @endif
                                         </td>
 
-                                        <td class="py-4 px-6 text-center whitespace-nowrap">
+                                        <td class="py-4 px-4 sm:px-6 text-center whitespace-nowrap">
                                             <div class="flex items-center justify-center gap-1">
                                                 <a href="{{ route('admin.berita.edit', $berita->id) }}"
                                                     class="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
@@ -165,7 +231,7 @@
                                                             viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 stroke-width="2"
-                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1v3M4 7h16" />
                                                         </svg>
                                                     </button>
                                                 </form>
@@ -174,9 +240,9 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="py-12 text-center text-gray-400 italic font-medium">
-                                            Belum ada berita yang diterbitkan, Jon. Klik "Tambah Berita" di atas buat
-                                            mengisi data.
+                                        <td colspan="5"
+                                            class="py-12 text-center text-gray-400 italic font-medium text-sm">Belum ada
+                                            berita yang diterbitkan, Jon. Klik "Tambah Berita" di atas buat mengisi data.
                                         </td>
                                     </tr>
                                 @endforelse
@@ -185,7 +251,7 @@
                     </div>
 
                     @if ($beritas->hasPages())
-                        <div class="p-6 border-t border-gray-100 bg-gray-50/50">
+                        <div class="p-4 sm:p-6 border-t border-gray-100 bg-gray-50/50">
                             {{ $beritas->links() }}
                         </div>
                     @endif

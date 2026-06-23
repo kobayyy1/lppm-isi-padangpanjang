@@ -2,35 +2,36 @@
 
 @section('content')
     <div>
-        <section class="bg-white py-16">
+        <section class="bg-white py-12 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="relative mb-10">
-                    <div class="absolute -top-9 left-6 sm:left-8 z-10 flex items-end gap-3 select-none">
+                <div class="relative mb-8 sm:mb-10">
+                    <div class="absolute -top-7 sm:-top-9 left-4 sm:left-8 z-10 flex items-end gap-2 sm:gap-3 select-none">
                         <img src="{{ asset('images/icon-doc.png') }}" alt="Docs"
-                            class="h-12 w-auto object-contain drop-shadow-md">
+                            class="h-8 sm:h-12 w-auto object-contain drop-shadow-md">
                         <img src="{{ asset('images/icon-notice.png') }}" alt="Notice"
-                            class="h-7 object-contain drop-shadow-md">
-                        <div class="inline-flex items-center gap-1.5">
+                            class="h-5 sm:h-7 object-contain drop-shadow-md">
+
+                        <div class="inline-flex items-center gap-1">
                             @for ($i = 0; $i < 3; $i++)
                                 <div class="grid grid-cols-2 gap-0.5">
-                                    <span class="w-2 h-2 bg-[#ff9f1c] rounded-[1px]"></span>
-                                    <span class="w-2 h-2 bg-transparent"></span>
-                                    <span class="w-2 h-2 bg-transparent"></span>
-                                    <span class="w-2 h-2 bg-[#ff9f1c] rounded-[1px]"></span>
+                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#ff9f1c] rounded-[1px]"></span>
+                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-transparent"></span>
+                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-transparent"></span>
+                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#ff9f1c] rounded-[1px]"></span>
                                 </div>
                             @endfor
                         </div>
                     </div>
                     <div
-                        class="absolute top-1/2 -translate-y-1/2 right-6 sm:right-8 z-10 flex flex-col items-end gap-1 select-none">
+                        class="absolute top-1/2 -translate-y-1/2 right-6 sm:right-8 z-10 hidden sm:flex flex-col items-end gap-1 select-none">
                         <div class="w-36 h-[1.5px] bg-white opacity-20"></div>
                         <img src="{{ asset('images/icon/arrow-bold.png') }}" alt="Aksen"
                             class="h-10 w-auto object-contain drop-shadow-md">
                     </div>
                     <div
-                        class="bg-[#0f2440] text-white px-6 sm:px-8 pt-8 pb-6 rounded-2xl shadow-sm overflow-hidden min-h-[100px] relative">
+                        class="bg-[#0f2440] text-white px-5 sm:px-8 pt-11 sm:pt-8 pb-5 sm:pb-6 rounded-2xl shadow-sm overflow-hidden min-h-[90px] sm:min-h-[100px] relative">
                         <div class="absolute bottom-0 left-0 w-full h-1.5 bg-[#ff9f1c]"></div>
-                        <h1 class="text-2xl sm:text-4xl font-black tracking-tight">Data Penelitian:</h1>
+                        <h1 class="text-xl sm:text-4xl font-black tracking-tight">Data Penelitian:</h1>
                     </div>
                 </div>
                 <div class="flex justify-start mb-8">
@@ -40,11 +41,13 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                             stroke="currentColor"
                             class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform text-[#ff9f1c] group-hover:text-[#0f2440]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5-7.5" />
                         </svg>
                     </button>
                 </div>
-
+                <!-- ========================================================================= -->
+                <!-- START: GRID DATA PENELITIAN (CAROUSEL SYSTEM)                            -->
+                <!-- ========================================================================= -->
                 @php
                     $perPage = 9;
                     $totalPenelitian = $penelitians->count();
@@ -55,7 +58,7 @@
 
                     @forelse ($penelitians->chunk($perPage) as $pageIndex => $chunk)
                         <div class="carousel-page {{ $pageIndex === 0 ? '' : 'hidden' }}" data-page="{{ $pageIndex }}">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 sm:mb-12">
                                 @foreach ($chunk as $i => $item)
                                     @php $isFirst = ($pageIndex === 0 && $i === 0); @endphp
 
@@ -84,9 +87,8 @@
                                         <img src="{{ asset($frontCoverPath) }}" alt="{{ $item->judul }}"
                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                             onerror="this.src='{{ asset('images/berita1.png') }}'">
-
-                                        <div class="absolute bottom-0 inset-x-0 p-5 z-20 text-left">
-                                            <div class="flex items-start gap-1.5 mb-2">
+                                        <div class="absolute bottom-0 inset-x-0 p-4 sm:p-5 z-20 text-left">
+                                            <div class="flex items-start gap-1.5 mb-1.5">
                                                 <div class="grid grid-cols-2 gap-0.5 mt-1 flex-shrink-0">
                                                     <span class="w-1.5 h-1.5 bg-[#ff9f1c] rounded-[1px]"></span>
                                                     <span class="w-1.5 h-1.5 bg-transparent"></span>
@@ -103,9 +105,8 @@
                                                 {{ $item->deskripsi_singkat }}
                                             </p>
                                         </div>
-
                                         <span
-                                            class="absolute bottom-3 right-4 text-[8px] text-gray-400 opacity-60 font-light flex items-center gap-1 z-20">
+                                            class="absolute bottom-3 right-4 text-[8px] text-gray-400 opacity-60 font-light hidden sm:flex items-center gap-1 z-20">
                                             Institut Seni Indonesia Padangpanjang
                                             <svg class="w-2.5 h-2.5 text-[#ff9f1c]" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
@@ -119,7 +120,7 @@
                         </div>
                     @empty
                         <div class="carousel-page" data-page="0">
-                            <div class="text-center py-12 text-gray-400 font-medium italic">
+                            <div class="text-center py-12 text-gray-400 font-medium italic text-sm">
                                 Belum ada berkas riset penelitian resmi yang diterbitkan, Dy. Silakan isi melalui dashboard
                                 control panel admin.
                             </div>
@@ -127,11 +128,12 @@
                     @endforelse
 
                 </div>
-
+                <!-- ========================================================================= -->
+                <!-- END: GRID DATA PENELITIAN                                                 -->
+                <!-- ========================================================================= -->
                 <div
                     class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-gray-100 pt-8 relative">
                     <div class="hidden sm:block w-24"></div>
-
                     <div class="flex items-center gap-2 select-none" id="pagination-controls">
                         <button id="btn-prev"
                             class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-[#0f2440] hover:bg-[#0f2440] hover:text-white transition-all focus:outline-none shadow-sm disabled:opacity-30 disabled:cursor-not-allowed"
@@ -161,17 +163,16 @@
                             </svg>
                         </button>
                     </div>
-
-                    <div class="flex items-center justify-center select-none self-end lg:self-auto">
+                    <div class="flex items-center justify-center select-none self-center sm:self-end">
                         <img src="{{ asset('images/icon/arrow-bold.png') }}" alt="Aksen"
-                            class="w-36 h-36 object-contain transform -rotate-180 drop-shadow-md">
+                            class="w-20 h-20 sm:w-36 sm:h-36 object-contain transform drop-shadow-md">
                     </div>
                 </div>
-
             </div>
         </section>
     </div>
 
+    <!-- JAVASCRIPT CAROUSEL SYSTEM LOGIC -->
     <script>
         (function() {
             const totalPages = {{ $totalPages }};
@@ -199,6 +200,7 @@
                 if (btnPrev) btnPrev.disabled = currentPage === 0;
                 if (btnNext) btnNext.disabled = currentPage === totalPages - 1;
 
+                // Auto scroll-up halus pas ganti halaman biar memanjakan user mobile
                 document.getElementById('carousel-wrapper').scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
