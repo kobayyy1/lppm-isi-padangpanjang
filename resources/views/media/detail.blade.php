@@ -2,6 +2,9 @@
 <html lang="id">
 
 <head>
+    <title>ISI Padangpanjang - LPPM</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-isi.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $media->title }} - LPPM ISI Padangpanjang</title>
@@ -75,7 +78,7 @@
                     </div>
                 </div>
                 <h2 class="text-4xl font-extrabold text-[#0f2440] tracking-tight relative pb-2 uppercase">
-                    Detail Media
+                    {{ $media->title }}a
                     <span class="absolute bottom-0 left-0 w-16 h-0.5 bg-[#0f2440] border-dashed border-b"></span>
                 </h2>
             </div>
@@ -90,12 +93,6 @@
                     <span
                         class="bg-[#0f2440] text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full flex-shrink-0">Dokumentasi</span>
                 </div>
-
-                <h1
-                    class="text-2xl sm:text-4xl md:text-5xl font-black text-[#0f2440] leading-[1.2] tracking-tight mb-5 break-words">
-                    {{ $media->title }}
-                </h1>
-
                 <div class="flex max-w-full text-left">
                     <div class="w-1 bg-[#ff9f1c] flex-shrink-0"></div>
                     <div class="bg-orange-50 px-5 py-4 rounded-r-xl w-full">

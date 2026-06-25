@@ -4,6 +4,7 @@
     @php
         $formattedBeritas = $beritas->map(function ($berita) {
             return [
+                'id' => $berita->id,
                 'title' => $berita->title,
                 'subTitle' => \Illuminate\Support\Str::limit(strip_tags($berita->content), 120, '...'),
                 'date' => \Carbon\Carbon::parse($berita->start_date ?? $berita->created_at)->format('d-m-Y'),
@@ -32,6 +33,9 @@
         });
     @endphp
 
+    <!-- ========================================================================= -->
+    <!-- HERO SECTION                                                              -->
+    <!-- ========================================================================= -->
     <section class="relative min-h-[calc(100vh-80px)] w-full overflow-hidden bg-white flex items-center">
         <div
             class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full relative z-10 py-12 lg:py-0">
@@ -84,6 +88,9 @@
         </div>
     </section>
 
+    <!-- ========================================================================= -->
+    <!-- SECTION BERITA (Navigasi Button Pindah ke Sisi Kanan Timeline)            -->
+    <!-- ========================================================================= -->
     <section class="bg-white py-16 border-t border-gray-100" x-data="newsComponent({{ $formattedBeritas->toJson() }})">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between mb-8">
@@ -121,16 +128,19 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+                <!-- SISI KIRI: Preview Gambar Utama (Klik untuk Zoom Foto) -->
                 <div class="lg:col-span-6 flex flex-col items-center w-full">
-                    <div
-                        class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-md group border border-gray-100 bg-gray-900">
-                        <div class="absolute inset-0 w-full h-full cursor-pointer">
+                    <div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-md group border border-gray-100 bg-gray-900 cursor-pointer"
+                        @click="openPreview(beritaList[activeSlide].image)">
+                        <div class="absolute inset-0 w-full h-full">
                             <div
-                                class="absolute inset-0 bg-gradient-to-t from-[#0f2440]/90 via-transparent to-transparent z-10">
+                                class="absolute inset-0 bg-gradient-to-t from-[#0f2440]/95 via-[#0f2440]/30 to-transparent z-10">
                             </div>
                             <div class="absolute inset-0 bg-slate-800 z-0"></div>
                             <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 relative z-10"
                                 :src="beritaList[activeSlide].image" :alt="beritaList[activeSlide].title">
+
                             <div class="absolute bottom-0 inset-x-0 p-6 z-20 text-left">
                                 <div class="flex items-center gap-1.5 mb-2">
                                     <div class="grid grid-cols-2 gap-0.5">
@@ -142,7 +152,7 @@
                                     <h3 class="text-white font-bold text-sm sm:text-base md:text-lg leading-snug lg:max-w-md"
                                         x-text="beritaList[activeSlide].title"></h3>
                                 </div>
-                                <p class="text-gray-300 text-[11px] sm:text-xs font-light pl-4"
+                                <p class="text-gray-300 text-[11px] sm:text-xs font-light pl-4 line-clamp-2"
                                     x-text="beritaList[activeSlide].subTitle"></p>
                             </div>
                         </div>
@@ -155,6 +165,7 @@
                     </div>
                 </div>
 
+                <!-- SISI KANAN: List Judul Berita Bertumpuk (Tempat Button Baru Sesuai image_236681.png) -->
                 <div class="lg:col-span-6 grid grid-cols-12 gap-4 w-full relative lg:aspect-[4/3] animate-fade-in">
                     <div class="col-span-11 relative h-full">
                         <div class="w-full h-full overflow-y-auto pl-10 pr-2 flex flex-col scroll-smooth no-scrollbar"
@@ -163,6 +174,8 @@
                                 <template x-for="(item, index) in beritaList" :key="index">
                                     <div class="w-full h-[33.33%] flex-shrink-0 flex flex-col justify-center relative group cursor-pointer border-b border-gray-100/50 last:border-0 py-2"
                                         @click="activeSlide = index">
+
+                                        <!-- Batang Jalur & Simpul Timeline Indikator -->
                                         <div class="absolute left-[-23px] top-0 bottom-0 w-1.5 pointer-events-none flex flex-col overflow-hidden"
                                             :class="index === 0 ? 'rounded-t-full' : (index === beritaList.length - 1 ?
                                                 'rounded-b-full' : '')">
@@ -178,6 +191,8 @@
                                             <div class="w-2.5 h-2.5 rounded-full bg-[#0f2440]"
                                                 x-show="activeSlide === index"></div>
                                         </div>
+
+                                        <!-- Sektor Paparan Teks Item -->
                                         <div class="text-left w-full">
                                             <h3 class="text-sm sm:text-base md:text-lg transition-all duration-300 leading-tight mb-1 line-clamp-1"
                                                 :class="activeSlide === index ?
@@ -190,7 +205,21 @@
                                                 <span class="w-0.5 h-2.5 bg-[#ff9f1c]"></span>
                                                 Upload <span class="ml-1" x-text="item.date"></span>
                                             </span>
+
+                                            <!-- 🎯 BUTTON PINDAH KE SINI JON: Di bawah tulisan tanggal persis gambar mockup lu -->
+                                            <div class="mt-2 text-left" x-show="activeSlide === index" x-transition>
+                                                <button @click.stop="window.location.href = '/berita/detail/' + item.id"
+                                                    class="inline-flex items-center gap-1 bg-[#ff9f1c] text-[#0f2440] hover:bg-[#0f2440] hover:text-white font-extrabold text-[10px] px-2.5 py-1.5 rounded-lg shadow-sm transition-all active:scale-95">
+                                                    Baca Selengkapnya
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                        stroke-width="2.5" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </template>
                             </div>
@@ -205,10 +234,34 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+        </div>
+
+        <!-- MODAL POPUP: Zoom Gambar Utama -->
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            x-show="openModal" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+            @keydown.escape.window="openModal = false" style="display: none;">
+            <button class="absolute top-6 right-6 text-white hover:text-[#ff9f1c] transition-colors focus:outline-none"
+                @click="openModal = false">
+                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <div class="max-w-4xl max-h-[85vh] overflow-hidden rounded-xl shadow-2xl bg-gray-900 border border-white/10"
+                @click.away="openModal = false" x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="scale-95 opacity-0" x-transition:enter-end="scale-100 opacity-100">
+                <img class="w-full h-full object-contain max-h-[85vh]" :src="modalImage" alt="Preview Full">
             </div>
         </div>
     </section>
 
+    <!-- ========================================================================= -->
+    <!-- SECTION MEDIA GALERI                                                      -->
+    <!-- ========================================================================= -->
     <section
         class="relative min-h-[550px] sm:min-h-[650px] lg:min-h-[700px] w-full overflow-hidden bg-[#0f2440] text-white"
         x-data="mediaComponent({{ $formattedMedias->toJson() }})">
@@ -367,9 +420,11 @@
         </div>
     </section>
 
+    <!-- ========================================================================= -->
+    <!-- SECTION INFORMATION                                                       -->
+    <!-- ========================================================================= -->
     <section class="bg-white py-16 border-t border-gray-100 overflow-hidden relative" x-data="informationComponent({{ $formattedInformations->toJson() }})">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
                 <div class="flex flex-col text-left">
                     <div class="flex items-center gap-1.5 mb-1 select-none">
@@ -384,11 +439,9 @@
                             </div>
                         </template>
                     </div>
-
                     <h1
                         class="text-4xl sm:text-5xl lg:text-6xl font-black text-[#0f2440] tracking-tight leading-none mt-1">
                         Information</h1>
-
                     <div class="flex items-center mt-2" style="gap:4px;">
                         <div class="bg-[#0f2440] rounded-full w-28 sm:w-[220px]" style="height:3px;"></div>
                         <div class="bg-[#0f2440] rounded-full w-10 sm:w-[60px]" style="height:3px;"></div>
@@ -401,7 +454,6 @@
                         Upload <span x-text="infoList[activeIndex].date"></span>
                     </span>
                 </div>
-
                 <div class="flex items-center justify-start sm:justify-end gap-3 sm:gap-4 self-start sm:self-center">
                     <img src="{{ asset('images/icon-arrow.png') }}" alt="Aksen"
                         class="w-6 h-6 sm:w-8 sm:h-8 object-contain">
@@ -501,9 +553,11 @@
         </div>
     </section>
 
+    <!-- CORE ALPINE CONFIGURATION -->
     <script>
         function newsComponent(laravelBerita) {
             const defaultPlaceholder = [{
+                id: null,
                 title: "Belum Ada Berita Terbaru, Dy!",
                 subTitle: "Silakan isi data berita utama dari dashboard control panel admin terlebih dahulu.",
                 date: "---",
@@ -511,10 +565,18 @@
             }];
             return {
                 activeSlide: 0,
-                beritaList: laravelBerita && laravelBerita.length > 0 ? laravelBerita : defaultPlaceholder
+                openModal: false,
+                modalImage: '',
+                beritaList: laravelBerita && laravelBerita.length > 0 ? laravelBerita : defaultPlaceholder,
+                openPreview(imageSrc) {
+                    if (this.beritaList[0].date === '---') return;
+                    this.modalImage = imageSrc;
+                    this.openModal = true;
+                }
             }
         }
 
+        // Sisa function mediaComponent & informationComponent tetep aman di bawah sini...
         function mediaComponent(laravelMedia) {
             const defaultPlaceholder = [{
                 title: "Belum Ada Media Terbaru, Dy!",

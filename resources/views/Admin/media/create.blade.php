@@ -13,7 +13,7 @@
                     <p class="text-[9px] text-[#ff9f1c] font-bold tracking-wider uppercase">LPPM ISI Padangpanjang</p>
                 </div>
             </div>
-            @include('Admin.sidebar')
+            @include(' admin.sidebar')
         </div>
 
         <div class="flex-1 flex flex-col min-w-0 overflow-x-hidden">

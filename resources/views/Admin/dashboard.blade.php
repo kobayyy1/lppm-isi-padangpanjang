@@ -35,7 +35,7 @@
                     </button>
                 </div>
                 <div class="flex-1 overflow-y-auto">
-                    @include('Admin.sidebar')
+                    @include(' admin.sidebar')
                 </div>
                 <div class="p-4 border-t border-slate-700/50">
                     <a href="{{ route('home') }}" target="_blank"
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="flex-1 overflow-y-auto">
-                @include('Admin.sidebar')
+                @include(' admin.sidebar')
             </div>
             <div class="p-4 border-t border-slate-700/50 space-y-1">
                 <a href="{{ route('home') }}" target="_blank"

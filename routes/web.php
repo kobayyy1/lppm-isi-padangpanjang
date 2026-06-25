@@ -7,17 +7,20 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminAboutController;
 use App\Http\Controllers\Admin\PenelitianController;
 use App\Http\Controllers\Admin\InformationController;
-use App\Http\Controllers\Admin\MediaController; 
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ResearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/Research', [ResearchController::class, 'index'])->name('research.index');
 Route::get('/Information', [InfoController::class, 'index'])->name('information.index');
+Route::get('/information/detail/{id}', [InfoController::class, 'show'])->name('information.detail');
 Route::get('/About', [AboutController::class, 'index'])->name('about.index');
 Route::get('/research/detail/{id}', [ResearchController::class, 'detail'])->name('detail.penelitian');
+Route::get('/berita/detail/{id}', [NewsController::class, 'show'])->name('detail.berita');
 Route::get('/media/detail/{id}', [MediaController::class, 'detail'])->name('media.detail');
 
 

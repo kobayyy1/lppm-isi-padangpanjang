@@ -2,6 +2,10 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+
+    <title>ISI Padangpanjang - LPPM</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-isi.png') }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ISI Padangpanjang - LPPM</title>

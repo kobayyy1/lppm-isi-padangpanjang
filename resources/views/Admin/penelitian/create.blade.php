@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            @include('Admin.sidebar')
+            @include(' admin.sidebar')
 
             <div class="p-4 border-t border-slate-700/50 space-y-1">
                 <a href="{{ route('admin.penelitian.index') }}"

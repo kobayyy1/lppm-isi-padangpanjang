@@ -2,6 +2,11 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <title>ISI Padangpanjang - LPPM</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-isi.png') }}">
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ISI Padangpanjang - LPPM</title>
@@ -218,18 +223,15 @@
                     class="static md:absolute md:left-4 md:top-0 bg-[#ff9f1c] text-[#0f2440] hover:text-black w-12 h-12 md:w-24 md:h-24 rounded-full md:rounded-b-3xl flex items-center justify-center shadow-lg transition-all transform hover:translate-y-1 z-20 group -mt-9 md:mt-0">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                         stroke="currentColor"
-                        class="w-6 h-6 md:w-10 md:h-10 transform group-hover:-translate-y-1 transition-transform">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
+                        class="w-6 h-6 md:w-10 md:h-10 transform group-hover:-translate-y-1 transition-transform flex-shrink-0">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                     </svg>
+
                 </button>
                 <div
                     class="w-full md:w-auto md:ml-auto flex items-center justify-center md:justify-end gap-2 text-[#0f2440] text-xs sm:text-sm font-semibold opacity-90 text-center">
                     <span>Institut Seni Indonesia Padangpanjang</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-4 h-4 hidden sm:block">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9s2.015-9 4.5-9m0 0a9.015 9.015 0 0 1 0 18M12 3a9.004 9.004 0 0 0-8.716 6.748M12 3a9.004 9.004 0 0 1 8.716 6.748" />
-                    </svg>
+                    <img src="{{ asset('images/icon/globe.png') }}" alt="globe.png" class="w-6 h-6 md:h-6">
                 </div>
             </div>
         </div>
@@ -301,7 +303,7 @@
 
                     <div class="text-center md:max-w-md order-3 md:order-2">
                         <p class="text-xs sm:text-sm text-gray-400 font-normal leading-relaxed">
-                            © All Copyrights and reserved Goes to Muhammad Bintang Ramadhan & Bayu Ady Nugrho
+                            © All Copyrights and reserved Goes to Muhammad Bintang Ramadhan & Bayu Ady Nugroho
                         </p>
                     </div>
 

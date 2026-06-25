@@ -2,10 +2,12 @@
 <html lang="id">
 
 <head>
+    <title>Detail Data Penelitian - LPPM ISI Padangpanjang</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-isi.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Detail Data Penelitian - LPPM ISI Padangpanjang</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -310,11 +312,7 @@
                 <div
                     class="w-full md:w-auto md:ml-auto flex items-center justify-center md:justify-end gap-2 text-[#0f2440] text-xs sm:text-sm font-semibold opacity-90 text-center">
                     <span>Institut Seni Indonesia Padangpanjang</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-4 h-4 hidden sm:block">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9s2.015-9 4.5-9m0 0a9.015 9.015 0 0 1 0 18M12 3a9.004 9.004 0 0 0-8.716 6.748M12 3a9.004 9.004 0 0 1 8.716 6.748" />
-                    </svg>
+                    <img src="{{ asset('images/icon/globe.png') }}" alt="globe" class="w-6 h-6">
                 </div>
             </div>
         </div>

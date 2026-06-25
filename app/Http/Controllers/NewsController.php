@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
-use App\Models\Information;
-use App\Models\Penelitian;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
-class InfoController extends Controller
+class NewsController extends Controller
 {
     public function index()
     {
         $today = Carbon::today()->toDateString();
-
         $beritas = Berita::where(function ($query) use ($today) {
             $query->whereNull('start_date')
                 ->orWhere('start_date', '<=', $today);
@@ -25,16 +22,12 @@ class InfoController extends Controller
             ->latest()
             ->get();
 
-        $informations = Information::latest()->get();
-        $penelitians = Penelitian::latest()->get();
-
-        return view('information.index', compact('beritas', 'informations', 'penelitians'));
+        return view('berita.index', compact('beritas'));
     }
-
     public function show($id)
     {
-        $information = Information::findOrFail($id);
+        $berita = Berita::findOrFail($id);
 
-        return view('information.detail', compact('information'));
+        return view('berita.detail', compact('berita'));
     }
 }
